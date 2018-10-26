@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Data Tables</title>
+</h:head>
+<h:body>
+	<h2 style="text-align: center;">Customers Information</h2>
+	<div style="text-align: center;">
+		<h:form>
+			<h:dataTable value="#{customerBean.customers}" var="customer"
+				border="2">
+				<h:column>
+					<f:facet name="header">Customer ID</f:facet>
+			#{customer.id}
+		</h:column>
+
+				<h:column>
+					<f:facet name="header">Name</f:facet>
+			#{customer.name}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Phone number</f:facet>
+			#{customer.phoneNumber}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Address</f:facet>
+			#{customer.address}
+		</h:column>
+
+				<h:column>
+					<f:facet name="header">City</f:facet>
+			#{customer.city}
+		</h:column>
+				<h:column>
+					<h:commandLink value="Edit" />
+
+				</h:column>
+				<h:column>
+					<h:commandLink value="Delete"
+						action="customerBean.deleteRow(customer.id)" />
+
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+</h:body>
+</html>
