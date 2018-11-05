@@ -23,6 +23,17 @@ public class CustomerBean {
 	private String address;
 	private String city;
 
+	// properties for update
+	private int idUpdate;
+
+	public int getIdUpdate() {
+		return idUpdate;
+	}
+
+	public void setIdUpdate(int idUpdate) {
+		this.idUpdate = idUpdate;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -73,9 +84,10 @@ public class CustomerBean {
 
 	public CustomerBean() throws ClassNotFoundException, SQLException {
 		initConnectToDB();
+		getListCustomer();
 	}
 
-	public List<Customer> getCustomers() throws ClassNotFoundException, SQLException {
+	public void getListCustomer() throws SQLException {
 		customers = new ArrayList<Customer>();
 		PreparedStatement pstmt = connect.prepareStatement("select * from customer");
 		ResultSet rs = pstmt.executeQuery();
@@ -91,7 +103,9 @@ public class CustomerBean {
 		}
 		rs.close();
 		pstmt.close();
+	}
 
+	public List<Customer> getCustomers() throws ClassNotFoundException, SQLException {
 		return customers;
 	}
 
@@ -101,7 +115,38 @@ public class CustomerBean {
 		PreparedStatement pstmt = connect.prepareStatement(query);
 		pstmt.setInt(1, id);
 		pstmt.executeUpdate();
+		getListCustomer();
 		return null;
+	}
+
+	public String save() throws SQLException {
+		int id = getIdUpdate();
+		for (Customer scustomer : customers) {
+			if (scustomer.getId() == id) {
+				scustomer.setCanEdit(false);
+				UpdateCustomer(scustomer, id);
+				break;
+			}
+		}
+		return null;
+	}
+
+	private void UpdateCustomer(Customer customer, int id) throws SQLException {
+		String query = "update customer set name = ?,phone_number = ?, address = ?, city = ? where id = ?";
+		String name = customer.getName();
+		String phonenumber = customer.getPhoneNumber();
+		String address = customer.getAddress();
+		String city = customer.getCity();
+
+		PreparedStatement pstmt = connect.prepareStatement(query);
+		pstmt.setString(1, name);
+		pstmt.setString(2, phonenumber);
+		pstmt.setString(3, address);
+		pstmt.setString(4, city);
+		pstmt.setInt(5, id);
+		pstmt.executeUpdate();
+		getListCustomer();
+
 	}
 
 	private void formatData() {
@@ -127,10 +172,8 @@ public class CustomerBean {
 
 	public String edit(Customer customer) {
 		customer.setCanEdit(true);
+		setIdUpdate(customer.getId());
 		return null;
 	}
 
-	public String save() {
-		return null;
-	}
 }

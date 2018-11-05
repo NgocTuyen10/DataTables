@@ -5,23 +5,22 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<title>Data Tables</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 </h:head>
 <h:body>
 	<h2>Customers Information Table</h2>
 	<h:form>
 		<h:dataTable value="#{customerBean.customers}" var="customer"
-			border="2" editable="true" editMode="cell">
+			styleClass="customerTable" headerClass="customerTableHeader"
+			rowClasses="customerTableOddRow,customerTableEvenRow">
 			<h:column>
 				<f:facet name="header">Id</f:facet>
-				<h:inputText value="#{customer.id}" size="10"
-					rendered="#{customer.canEdit}" />
-				<h:outputText value="#{customer.id}"
-					rendered="#{not customer.canEdit}" />
+				<h:outputText value="#{customer.id}" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Name</f:facet>
-				<h:inputText value="#{customer.name}" size="20"
+				<h:inputText value="#{customer.name}" size="10"
 					rendered="#{customer.canEdit}" />
 				<h:outputText value="#{customer.name}"
 					rendered="#{not customer.canEdit}" />
@@ -29,7 +28,7 @@
 
 			<h:column>
 				<f:facet name="header">Phone number</f:facet>
-				<h:inputText value="#{customer.phoneNumber}" size="15"
+				<h:inputText value="#{customer.phoneNumber}" size="10"
 					rendered="#{customer.canEdit}" />
 				<h:outputText value="#{customer.phoneNumber}"
 					rendered="#{not customer.canEdit}" />
@@ -37,7 +36,7 @@
 
 			<h:column>
 				<f:facet name="header">Address</f:facet>
-				<h:inputText value="#{customer.address}" size="15"
+				<h:inputText value="#{customer.address}" size="10"
 					rendered="#{customer.canEdit}" />
 				<h:outputText value="#{customer.address}"
 					rendered="#{not customer.canEdit}" />
@@ -45,7 +44,7 @@
 
 			<h:column>
 				<f:facet name="header">City</f:facet>
-				<h:inputText value="#{customer.city}" size="15"
+				<h:inputText value="#{customer.city}" size="10"
 					rendered="#{customer.canEdit}" />
 				<h:outputText value="#{customer.city}"
 					rendered="#{not customer.canEdit}" />
